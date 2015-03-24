@@ -23,21 +23,21 @@ ClocksController = function() {
   }
 };
 
-ClocksController.prototype.drawFrame = function(delta, total_time) {
+ClocksController.prototype.drawFrame = function(animation_time) {
   if ( this.current_animation === null ) {
     this.current_animation = "wave-l-r";
-    this.animation_start_time = total_time;
+    this.animation_start_time = animation_time.total;
   }
 
-  animation_delta = (total_time - this.animation_start_time) / 1000;
-  //console.log({ 'delta': animation_delta, 'time': total_time });
+  animation_time.animation_elapsed = (animation_time.total - this.animation_start_time) / 1000;
 
   var row, column;
   for( var i = 0; i < this.clocks.length; i++ ) {
     row    = Math.floor(i / this.clocks_wide);
     column = i % this.clocks_wide;
 
-    this.clock_for_row_column_time(row, column, delta, total_time, animation_delta, this.clocks[i]);
+    //this.clock_for_row_column_time(row, column, delta, total_time, animation_delta, this.clocks[i]);
+    this.clock_for_row_column_time(row, column, animation_time, this.clocks[i]);
   }
 };
 
